@@ -1,0 +1,34 @@
+{
+  "name": "mycelium-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local read-only explorer for Mycelium artifact graphs",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuraSidorets/mycelium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YuraSidorets/mycelium/issues"
+  },
+  "homepage": "https://github.com/YuraSidorets/mycelium#readme",
+  "type": "module",
+  "bin": {
+    "mycelium-atlas": "bin/mycelium-atlas.mjs"
+  },
+  "files": [
+    "bin/mycelium-atlas.mjs",
+    "bin/mycelium_graph.py",
+    "bin/mycelium_lineage.py",
+    "bin/mycelium.py",
+    "web/mycelium-atlas/index.html",
+    "web/mycelium-atlas/atlas.css",
+    "web/mycelium-atlas/atlas.js",
+    "web/mycelium-atlas/atlas-draft-store.js",
+    "web/mycelium-atlas/atlas-layout.js",
+    "web/mycelium-atlas/atlas-model.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

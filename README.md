@@ -50,6 +50,49 @@ To make the shared contract mandatory for every session, import it from your
 @skills/mycelium/SKILL.md
 ```
 
+### With Codex
+
+Codex reads skills from its skills directory and instructions from `AGENTS.md`.
+Link the same clone there:
+
+```powershell
+# Windows
+New-Item -ItemType Junction -Path "$HOME\.codex\skills\mycelium" -Target "<path-to-clone>"
+```
+
+```bash
+# Linux / macOS (Codex CLI; some setups use ~/.agents/skills instead)
+ln -s <path-to-clone> ~/.codex/skills/mycelium
+```
+
+Then import the contract from your global `~/.codex/AGENTS.md` (or a project
+`AGENTS.md`), the same way as for Claude:
+
+```
+@~/.codex/skills/mycelium/SKILL.md
+```
+
+On Codex the spawn capability is `collaboration.spawn_agent`, which is the
+default in `bin/subagent-brief.*`; no adapter files are needed. The `agents/`,
+`claude/`, and `.claude-plugin/` directories are Claude Code only and are
+ignored by Codex.
+
+### Making it the default, not just available
+
+Importing `SKILL.md` loads the contract; it does not by itself make an agent
+use it. Add an explicit instruction next to the import in `CLAUDE.md` or
+`AGENTS.md`, for example:
+
+```
+Mycelium is mandatory, not a reference. For any task that gathers evidence,
+changes files, or produces a result the user will rely on, begin a tracked run
+first (bin/mycelium-lineage.* begin --topology-preset apex-stem-cap, or
+bin/mycelium-quick.* for a low-risk single-context goal), record every role
+with -RunId, seal, and run evals/verify-cap.py before reporting done. Only a
+direct factual answer that needs no file reading may skip this; say so in one
+line.
+```
+
 ## Local pipeline
 
 Windows (PowerShell 7.5 or newer):

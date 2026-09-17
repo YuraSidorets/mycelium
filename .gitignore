@@ -1,0 +1,13 @@
+# Live Mycelium state of whatever project this clone is used in
+/.mycelium/
+
+# Local output, never release source
+/.tmp-stage/
+/jobs/
+/.playwright-cli/
+__pycache__/
+*.py[cod]
+
+# Keep the scripts even if a global ignore hides bin/
+!bin/
+!bin/*.ps1

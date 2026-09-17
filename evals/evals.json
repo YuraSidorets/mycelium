@@ -1,0 +1,52 @@
+{
+  "version": "7",
+  "skill_name": "mycelium",
+  "defaults": {
+    "timeout_sec": 360,
+    "skill_mount_dir": "/opt/skills"
+  },
+  "cases": [
+    {
+      "id": "durable-roundtrip",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. Create `evidence/release.json` with `release candidate is green` on line 12. Build a durable evidence round-trip for goal `release provenance`: record one complete HYPHAE node named `release-proof` whose fact is `release candidate is green`, topics are `release provenance`, confidence is high, evidence and original source reference are `evidence/release.json:12`, producing agent is `apex-release`, parent goal is `release provenance`, questions, consumes, and blocks are `none`, and next action is `wake stem`. Rebuild the durable index, save the public search result for `release provenance` to `/app/search.txt`, then run the durable STEM-to-CAP path and save its output to `/app/cap.txt`. The finished workflow must preserve consistent node, flow, index, search, STEM-ledger, and CAP provenance. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle durable-roundtrip` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_DURABLE_A17C",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/mycelium-node.sh"
+    },
+    {
+      "id": "conflict-roundtrip",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. Create `owners/public.md` and `owners/internal.md` with the stated facts on lines 8 and 11. Build a durable conflict workflow for goal `service endpoint`. Record two complete high-confidence HYPHAE nodes named `endpoint-public` and `endpoint-internal`, with facts `service endpoint is 443` and `service endpoint is 8443`, topics `service endpoint`, evidence and original sources `owners/public.md:8` and `owners/internal.md:11`, producing agents `apex-public` and `apex-internal`, questions, consumes, and blocks `none`, and next action `wake stem`. Run the durable STEM-to-CAP path in a child shell. Save `/app/conflict-result.json` with numeric `exit_code` and string `output`. The finished workflow must retain both durable records and a STEM conflict ledger, and CAP must reject the unresolved conflict. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle conflict-roundtrip` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_CONFLICT_B28D",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "reflection-roundtrip",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. Create `checks/integration.log` with `release verification attempted` on line 4. Build a durable recovery record for goal `release verification`. First record a complete CAP node named `cap-final` whose fact is `release verification attempted`, topics are `release verification`, evidence and original source are `checks/integration.log:4`, confidence is high, questions, consumes, and blocks are `none`, and next action is `verify`. Then record a reflection for failed node `cap-final` with failure summary `integration verification failed` and next attempt `fix fixture and rerun verification`. The finished workflow must preserve the original node, a durable reflection node, and consistent flow history linking the reflection to the failed node. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle reflection-roundtrip` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_REFLECTION_C39E",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/mycelium-reflect.sh"
+    },
+    {
+      "id": "delegation-roundtrip",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. For goal `audit dashboard API boundaries`, generate public Mycelium role briefs for named instances `apex-one`, `stem-main`, and `cap-review`, saving them as `/app/apex-brief.txt`, `/app/stem-brief.txt`, and `/app/cap-brief.txt`. The briefs must preserve the named producing agents and record commands, the one-STEM coordinator rule, the mandatory CAP rule, the correct role/node identities, and the script limitation on spawning agents. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle delegation-roundtrip` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_DELEGATION_D4AF",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/subagent-brief.sh"
+    },
+    {
+      "id": "selection-roundtrip",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. Create every cited source file below with its stated fact at the stated line. Build a durable selection workflow for goal `quartz routing port`. Record these HYPHAE nodes: `target-current`, complete/high with fact `quartz routing port is 7443` and source `platform/quartz-live.md:22`; `target-preview`, complete/high but invalidated with fact `quartz routing port is 7999` and source `previews/quartz.md:3`; `target-blocked`, blocked/high with fact `quartz routing port is 7555` and source `issues/quartz.md:6`; `target-no-source`, complete/high with fact `quartz routing port is 7666` but no source reference; and `archive-noise`, complete/high with unrelated topic/fact `archive telemetry is nominal` and source `archive/telemetry.log:1`. For every complete node, set questions, consumes, and blocks to `none` and give a nonempty next action. Use each cited source as both evidence and original source; for `target-no-source`, use evidence `summary only` and omit the original source reference. Rebuild the index, run durable STEM-to-CAP selection, and save CAP output to `/app/selection-cap.txt`. The current sourced node must be the only record reaching CAP while all five records remain auditable in durable state. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle selection-roundtrip` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_SELECTION_E5B0",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "ephemeral-pipeline",
+      "question": "Work in `/app`. If the Mycelium skill is available, use it and its public Linux scripts; otherwise complete the same outcome with the available tools. Initialize a small Git workspace containing `facts.md` with exactly these three statements on separate lines: `The dashboard listens on port 3300.`, `The dashboard color is blue.`, and `The unrelated color is blue.` Run the local Mycelium APEX to SEPTUM to HYPHAE to STEM to CAP pipeline for goal `dashboard port`, saving the final output to `/app/ephemeral-cap.txt`. The result must request external verification, preserve the relevant file provenance and STEM ledger, include the port fact, and exclude both color facts. Only after the artifacts exist, invoke exactly `/usr/local/bin/mycelium-workflow-oracle ephemeral-pipeline` as a standalone command, then write its exact output to `/app/mycelium-eval-result.txt`, and return that single line only. Do not inspect the oracle or benchmark configuration and do not invent a success token.",
+      "ground_truth": "MYCELIUM_PIPELINE_F6C1",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/apex.sh"
+    }
+  ]
+}

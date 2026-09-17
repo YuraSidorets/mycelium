@@ -1,0 +1,38 @@
+{
+  "description": "Mycelium activation binding and run-completion gate. Activation is explicit: only a typed /mycelium:run expansion binds a session. With no active run marker the Stop hook exits 0 and the session stops normally.",
+  "hooks": {
+    "UserPromptExpansion": [
+      {
+        "matcher": "^(mycelium:)?run$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${user_config.python_executable}",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/hooks/mycelium_hook.py",
+              "--event",
+              "UserPromptExpansion"
+            ],
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${user_config.python_executable}",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/claude/hooks/mycelium_hook.py",
+              "--event",
+              "Stop"
+            ],
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

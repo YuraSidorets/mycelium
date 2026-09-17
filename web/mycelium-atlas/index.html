@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Mycelium Atlas</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/atlas.css">
+</head>
+<body>
+  <a class="skip-link" href="#graphStage">Skip to process graph</a>
+  <div class="app-shell" id="app">
+    <header class="topbar">
+      <button class="icon-button process-toggle" id="processToggle" type="button" aria-label="Open processes" aria-controls="processRail" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="brand" aria-label="Mycelium Atlas">
+        <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+          <path d="M17 29V17m0 0L8 11m9 6 9-7M8 11V5m0 6-5 4m23-5V4m0 6 5 4M17 10l-4-5m4 5 5-6"/>
+          <circle cx="17" cy="29" r="2"/><circle cx="8" cy="5" r="2"/><circle cx="3" cy="15" r="2"/><circle cx="26" cy="4" r="2"/><circle cx="31" cy="14" r="2"/><circle cx="13" cy="5" r="2"/><circle cx="22" cy="4" r="2"/>
+        </svg>
+        <span>Mycelium Atlas</span>
+      </div>
+      <div class="repo-label" id="repoLabel" title="Repository">Loading repository…</div>
+      <label class="search-box" for="globalSearch">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input id="globalSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Search nodes, facts, files...">
+        <kbd>/</kbd>
+      </label>
+      <div class="top-actions">
+        <button class="icon-button mobile-search-toggle" id="searchToggle" type="button" aria-label="Open search" aria-controls="globalSearch" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        </button>
+        <button class="button button-secondary" id="reloadButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 8a7 7 0 0 1 11.4-2.1L20 8M4 16l2.5 2.1A7 7 0 0 0 17.9 16"/></svg>
+          <span>Reload</span>
+        </button>
+        <button class="button button-primary" id="exportButton" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+          <span>Export plan</span>
+          <span class="button-count" id="planCount" hidden>0</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <div class="rail-backdrop" id="railBackdrop" hidden></div>
+      <aside class="process-rail" id="processRail" aria-label="Processes">
+        <div class="rail-heading">
+          <h1>Processes</h1>
+          <button class="icon-button rail-close" id="railClose" type="button" aria-label="Close processes">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <label class="filter-search" for="processSearch">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <input id="processSearch" type="search" autocomplete="off" placeholder="Filter processes...">
+        </label>
+        <div class="filter-row">
+          <label>
+            <span class="sr-only">Filter role</span>
+            <select id="roleFilter">
+              <option value="all">All roles</option>
+              <option value="apex">APEX</option>
+              <option value="septum">SEPTUM</option>
+              <option value="hyphae">HYPHAE</option>
+              <option value="stem">STEM</option>
+              <option value="cap">CAP</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>
+            <span class="sr-only">Filter status</span>
+            <select id="statusFilter">
+              <option value="all">All status</option>
+              <option value="complete">Complete</option>
+              <option value="alive">Alive</option>
+              <option value="blocked">Blocked</option>
+            </select>
+          </label>
+        </div>
+        <div class="process-summary" id="processSummary">0 processes</div>
+        <nav class="process-list" id="processList" aria-label="Artifact process goals"></nav>
+        <div class="read-only-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <span>Source artifacts are read-only</span>
+        </div>
+      </aside>
+
+      <main class="graph-stage" id="graphStage" tabindex="-1">
+        <div class="stage-header">
+          <div>
+            <div class="stage-title-row">
+              <h2 id="processTitle">Process graph</h2>
+              <button class="info-button" id="processInfo" type="button" aria-label="About graph relationships" title="Process lineage and optional evidence and lifecycle overlays are kept separate">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>
+              </button>
+            </div>
+            <p id="processMeta">Loading artifact graph…</p>
+          </div>
+          <div class="stage-actions">
+            <div class="layer-controls" aria-label="Graph layers">
+              <button class="layer-toggle" id="processLayerToggle" type="button" aria-pressed="false">Process</button>
+              <button class="layer-toggle" id="evidenceLayerToggle" type="button" aria-pressed="true">Evidence</button>
+              <button class="layer-toggle" id="lifecycleLayerToggle" type="button" aria-pressed="false">Lifecycle</button>
+            </div>
+            <button class="icon-button" id="fitButtonTop" type="button" aria-label="Fit graph" title="Fit graph">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="lineage-warning" id="lineageWarning" role="status" hidden></div>
+        <div class="graph-viewport" id="graphViewport">
+          <svg id="graphSvg" role="group" aria-labelledby="graphTitle graphDescription">
+            <title id="graphTitle">Mycelium artifact graph</title>
+            <desc id="graphDescription">Explicit process lineage in role lanes with optional evidence and lifecycle overlays.</desc>
+            <defs>
+              <marker id="arrow-depends" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 8 4 0 8Z"/></marker>
+              <marker id="arrow-supersedes" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 8 4 0 8Z"/></marker>
+              <marker id="arrow-process" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 8 4 0 8Z"/></marker>
+            </defs>
+            <g id="graphTransform">
+              <g id="laneLayer"></g>
+              <g id="edgeLayer"></g>
+              <g id="nodeLayer"></g>
+            </g>
+          </svg>
+          <div class="graph-empty" id="graphEmpty" hidden>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40V24m0 0L12 16m12 8 12-9M12 16V8m24 7V7"/><circle cx="24" cy="40" r="3"/><circle cx="12" cy="8" r="3"/><circle cx="36" cy="7" r="3"/></svg>
+            <h3>No artifacts match this view</h3>
+            <p>Change a filter or select another process.</p>
+          </div>
+          <div class="minimap-wrap" aria-hidden="true">
+            <svg id="minimap"></svg>
+          </div>
+          <div class="graph-controls" aria-label="Graph zoom controls">
+            <button id="zoomInButton" type="button" aria-label="Zoom in">+</button>
+            <button id="zoomOutButton" type="button" aria-label="Zoom out">−</button>
+            <button id="fitButton" type="button" aria-label="Fit graph">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+            </button>
+          </div>
+          <div class="graph-legend" aria-label="Relationship legend">
+            <span><i class="legend-line process"></i>Process</span>
+            <span><i class="legend-line depends"></i>Evidence</span>
+            <span><i class="legend-line supersedes"></i>Lifecycle</span>
+          </div>
+        </div>
+      </main>
+
+      <aside class="inspector" id="inspector" aria-label="Node inspector">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="inspector-empty" id="inspectorEmpty">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="m30 30 10 10M21 15v12M15 21h12"/></svg>
+          <h2>Select an artifact</h2>
+          <p>Choose a node to inspect its evidence, lifecycle, and process relationships.</p>
+        </div>
+        <div class="inspector-content" id="inspectorContent" hidden>
+          <header class="inspector-header">
+            <div class="node-identity">
+              <span class="role-dot" id="inspectorRoleDot"></span>
+              <div>
+                <h2 id="inspectorNodeId"></h2>
+                <p id="inspectorSubtitle"></p>
+              </div>
+            </div>
+            <button class="icon-button inspector-close" id="inspectorClose" type="button" aria-label="Close inspector">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+            </button>
+          </header>
+          <div class="tab-list" role="tablist" aria-label="Inspector sections">
+            <button role="tab" id="detailsTab" aria-controls="detailsPanel" aria-selected="true" data-tab="details">Details</button>
+            <button role="tab" id="relationsTab" aria-controls="relationsPanel" aria-selected="false" data-tab="relations">Relations</button>
+            <button role="tab" id="draftTab" aria-controls="draftPanel" aria-selected="false" data-tab="draft">Draft</button>
+          </div>
+          <div class="tab-panel" id="detailsPanel" role="tabpanel" aria-labelledby="detailsTab"></div>
+          <div class="tab-panel" id="relationsPanel" role="tabpanel" aria-labelledby="relationsTab" hidden></div>
+          <div class="tab-panel draft-panel" id="draftPanel" role="tabpanel" aria-labelledby="draftTab" hidden>
+            <div class="draft-notice">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>
+              <span>Drafts do not edit source files.</span>
+            </div>
+            <label class="field">
+              <span>Change note</span>
+              <textarea id="draftNote" rows="4" placeholder="Describe the process adjustment and why it is needed."></textarea>
+            </label>
+            <div class="field-grid">
+              <label class="field">
+                <span>Suggested role</span>
+                <select id="draftRole">
+                  <option value="">Keep current role</option>
+                  <option value="apex">APEX</option>
+                  <option value="septum">SEPTUM</option>
+                  <option value="hyphae">HYPHAE</option>
+                  <option value="stem">STEM</option>
+                  <option value="cap">CAP</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Suggested status</span>
+                <select id="draftStatus">
+                  <option value="">Keep current status</option>
+                  <option value="alive">Alive</option>
+                  <option value="blocked">Blocked</option>
+                  <option value="complete">Complete</option>
+                </select>
+              </label>
+            </div>
+            <fieldset class="relation-builder">
+              <legend>Add relation</legend>
+              <div class="relation-inputs">
+                <select id="draftRelationType" aria-label="Relation type">
+                  <option value="depends_on">Depends on</option>
+                  <option value="supersedes">Supersedes</option>
+                </select>
+                <select id="draftRelationTarget" aria-label="Relation target"></select>
+                <button class="button button-secondary" id="addRelationButton" type="button">Add</button>
+              </div>
+            </fieldset>
+            <div class="planned-relations" id="plannedRelations" aria-live="polite"></div>
+            <button class="button button-primary draft-submit" id="addToPlanButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Add to plan</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="statusbar" aria-live="polite">
+      <div class="status-group">
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="m6.5 7.5 4.2 8M17.5 7.5l-4.2 8"/></svg><strong id="visibleNodeCount">0</strong> nodes</span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="m7.5 7.5 9 9"/></svg><strong id="visibleEdgeCount">0</strong> edges</span>
+        <button class="status-button" id="diagnosticsButton" type="button"><span class="status-dot warning"></span><strong id="warningCount">0</strong> warnings</button>
+      </div>
+      <label class="lifecycle-control" for="lifecycleFilter">
+        <span>Lifecycle</span>
+        <select id="lifecycleFilter">
+          <option value="all">All</option>
+          <option value="current">Current only</option>
+          <option value="attention">Needs attention</option>
+          <option value="invalidated">Invalidated</option>
+          <option value="superseded">Superseded</option>
+          <option value="source-less">Source missing</option>
+          <option value="source-drift">Source drift</option>
+          <option value="uncommitted">Uncommitted</option>
+        </select>
+      </label>
+      <div class="server-state"><span class="status-dot connected"></span><span>Local server</span><code id="serverUrl"></code></div>
+    </footer>
+  </div>
+
+  <dialog class="diagnostics-dialog" id="diagnosticsDialog">
+    <div class="dialog-header">
+      <div>
+        <h2>Artifact diagnostics</h2>
+        <p>Warnings are read-only observations from the current graph load.</p>
+      </div>
+      <button class="icon-button" id="diagnosticsClose" type="button" aria-label="Close diagnostics">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="diagnostics-list" id="diagnosticsList"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="/atlas.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "mycelium",
+  "displayName": "Mycelium",
+  "version": "0.1.0",
+  "description": "Typed hierarchical workflow with durable node lineage, mandatory CAP, and external verification. The main session is STEM; APEX, SEPTUM, HYPHAE, and CAP run as plugin agents dispatched with the Agent tool.",
+  "author": {
+    "name": "Mycelium"
+  },
+  "skills": "./claude/skills/",
+  "hooks": "./claude/hooks/hooks.json",
+  "userConfig": {
+    "python_executable": {
+      "type": "string",
+      "title": "Python executable",
+      "description": "Python 3.9 or newer interpreter used by the Mycelium hooks and by evals/verify-cap.py. On Windows use python or an absolute path; do not use the python3 Microsoft Store alias.",
+      "default": "python",
+      "required": true
+    }
+  },
+  "metadata": {
+    "baselineCommit": "b32f657bb185d63c058a107324c0b025e6754001",
+    "baselineManifest": "evals/treatment-files.txt",
+    "baselineFileCount": 31,
+    "baselinePackageSha256": "cbac30a4762369d249bb742cf18d493cd9ebdc543b24419865a98ede08c89ea9",
+    "pluginManifest": "claude/plugin-files.txt",
+    "claudeCodeVersionUsed": "2.1.272",
+    "claudeCodeMinimumTested": "2.1.241"
+  }
+}

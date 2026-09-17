@@ -1,0 +1,38 @@
+{
+  "version": "1",
+  "skill_name": "mycelium",
+  "defaults": {
+    "timeout_sec": 360,
+    "skill_mount_dir": "/opt/skills"
+  },
+  "cases": [
+    {
+      "id": "role-delegation-discipline",
+      "question": "Use the available Mycelium skill and its bundled shell tools to generate an APEX subagent brief for the goal `audit dashboard API boundaries`, using the instance name `apex-one`. When installed, the skill root is `/opt/skills/mycelium`. Return the generated brief verbatim and nothing else.",
+      "ground_truth": "Producing Agent: apex-one",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/subagent-brief.ps1"
+    },
+    {
+      "id": "durable-node-provenance",
+      "question": "Use the available Mycelium skill and bundled shell tools. When installed, the skill root is `/opt/skills/mycelium`. In the current workspace create a schema-v2 complete HYPHAE node whose ID is `node-omega`, whose goal and topic are `omega provenance`, whose source_refs contains `source.md:7`, and whose fact says the omega adapter is enabled. Run the durable STEM-to-CAP path for the goal `omega provenance`, then return only the selected evidence reference from CAP, verbatim.",
+      "ground_truth": ".mycelium/nodes/node-omega.md",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.ps1"
+    },
+    {
+      "id": "conflict-rejection",
+      "question": "Use the available Mycelium skill and bundled shell tools. When installed, the skill root is `/opt/skills/mycelium`. Feed CAP two four-column tab records for `dashboard port`, followed by a STEM conflict record in the documented `- topic differs: node-a says value-a; node-b says value-b` form. One HYPHAE fact says the dashboard listens on port 3300 and the other says it does not. CAP rejection exits 1 by contract. In one wrapper PowerShell command, capture the child output, print CAP's output line whose label is `Verification` verbatim, then make the wrapper exit 0. Do not translate, retry, repair, or inspect the expected rejection.",
+      "ground_truth": "Verification: FAIL",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/cap.ps1"
+    },
+    {
+      "id": "selection-boundaries",
+      "question": "Use the available Mycelium skill and bundled shell tools. When installed, the skill root is `/opt/skills/mycelium`. Create one small complete relevant HYPHAE node with ID `node-relevant` for goal and topic `quartz routing`; also create an invalidated node, a status=blocked node, a status=failed node, and a large unrelated node. Run the durable STEM-to-CAP path. If and only if all four excluded node classes are absent from CAP while the relevant node remains, return only the relevant node's relative node-file path; otherwise return only the first leaking node ID.",
+      "ground_truth": ".mycelium/nodes/node-relevant.md",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.ps1"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+evals/benchmark-files.txt
+docs/design/mycelium-process-lineage.md
+evals/build-workflow-dockerfile.ps1
+evals/Dockerfile
+evals/Dockerfile-v4
+evals/evals.json
+evals/summarize-benchmark.ps1
+evals/treatment-files.txt
+evals/verify-cap.py
+evals/workflow-oracle.ps1

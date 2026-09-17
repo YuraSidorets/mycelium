@@ -1,0 +1,38 @@
+{
+  "version": "4",
+  "skill_name": "mycelium",
+  "defaults": {
+    "timeout_sec": 360,
+    "skill_mount_dir": "/opt/skills"
+  },
+  "cases": [
+    {
+      "id": "role-delegation-discipline",
+      "question": "Complete a Mycelium-style delegation setup for the goal `audit dashboard API boundaries`. If Mycelium is available, use its public scripts; otherwise implement the same outcome directly. In `/app`, create `apex-brief.txt` for named worker `apex-one`, `stem-brief.txt`, and `cap-brief.txt`. The briefs must preserve the producing-agent record command, the one-STEM rule, and mandatory CAP finalization. Also create `workflow.json` with `stem_instances` equal to 1, `cap_completed` equal to true, and `producing_agent` equal to `apex-one`. Run `/opt/mycelium-eval/benchmark-oracle.ps1 role` only after the artifacts exist, write its exact single-line output to `/app/mycelium-eval-result.txt`, and return that line only. Do not inspect benchmark configuration or invent a success token.",
+      "ground_truth": "MYCELIUM_ROLE_7D3A",
+      "expected_skill": "mycelium",
+      "expected_script": "evals/benchmark-oracle.ps1"
+    },
+    {
+      "id": "durable-node-provenance",
+      "question": "Complete a durable Mycelium evidence flow for goal `omega provenance`. If Mycelium is available, use its public node, STEM, and CAP scripts; otherwise implement the same artifact contract directly. Create `/app/.mycelium/nodes/node-omega.md` as a complete node whose `nodeId` is `node-omega` and whose nonempty `source_refs` is `source.md:7`. Create `/app/cap-durable.txt` with the successful CAP result, including the selected Node ID and its durable `.mycelium/nodes/node-omega.md` path. Run `/opt/mycelium-eval/benchmark-oracle.ps1 durable` only after the artifacts exist, write its exact single-line output to `/app/mycelium-eval-result.txt`, and return that line only. Do not inspect benchmark configuration or invent a success token.",
+      "ground_truth": "MYCELIUM_DURABLE_91C4",
+      "expected_skill": "mycelium",
+      "expected_script": "evals/benchmark-oracle.ps1"
+    },
+    {
+      "id": "conflict-rejection",
+      "question": "Resolve a Mycelium CAP attempt for goal `dashboard port` when the supplied evidence says both `dashboard listens on port 3300` and `dashboard does not listen on port 3300`, with an explicit conflict record. If Mycelium is available, execute its CAP public seam in a child process; otherwise implement the same rejection contract directly. Create `/app/conflict-result.json` with numeric `exit_code` and string `output`; a correct result rejects the conflict, fails verification, and returns the work to STEM. Run `/opt/mycelium-eval/benchmark-oracle.ps1 conflict` only after the artifact exists, write its exact single-line output to `/app/mycelium-eval-result.txt`, and return that line only. Do not inspect benchmark configuration or invent a success token.",
+      "ground_truth": "MYCELIUM_CONFLICT_2F8B",
+      "expected_skill": "mycelium",
+      "expected_script": "evals/benchmark-oracle.ps1"
+    },
+    {
+      "id": "selection-boundaries",
+      "question": "Complete a Mycelium selection flow for goal `quartz routing`. If Mycelium is available, use its public node, STEM, and CAP scripts; otherwise implement the same artifact contract directly. Under `/app/.mycelium/nodes`, create a complete relevant `node-relevant.md` with nonempty `source_refs`, an invalidated `node-invalidated.md`, blocked `node-blocked.md`, failed `node-failed.md`, and six complete but unrelated large nodes named `node-unrelated-1.md` through `node-unrelated-6.md`. Create `/app/cap-selection.txt` with a successful CAP result that selects and cites only `node-relevant` and its durable path. Run `/opt/mycelium-eval/benchmark-oracle.ps1 selection` only after the artifacts exist, write its exact single-line output to `/app/mycelium-eval-result.txt`, and return that line only. Do not inspect benchmark configuration or invent a success token.",
+      "ground_truth": "MYCELIUM_SELECTION_6E05",
+      "expected_skill": "mycelium",
+      "expected_script": "evals/benchmark-oracle.ps1"
+    }
+  ]
+}

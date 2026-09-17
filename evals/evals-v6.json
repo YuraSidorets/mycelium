@@ -1,0 +1,52 @@
+{
+  "version": "6",
+  "skill_name": "mycelium",
+  "defaults": {
+    "timeout_sec": 360,
+    "skill_mount_dir": "/opt/skills"
+  },
+  "cases": [
+    {
+      "id": "node-selection-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/node-selection-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Determine the effective Quartz edge routing port after rejecting invalidated, failed, superseded, and source-free records. Preserve the selected record's original `source_refs` path without its line number. Use `PORT` as one of `7443`, `7444`, `7555`, `7666`, or `7999`. Encode the source path by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `QUARTZ_PORT_<PORT>__SOURCE_<SOURCE_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "QUARTZ_PORT_7443__SOURCE_PLATFORM_QUARTZ_LIVE_MD",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "authority-conflict-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/authority-conflict-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Resolve the current audit-retention authority decision while rejecting invalidated and failed records. Use `ACTION` as one of `ESCALATE`, `SELECT_30_DAYS`, `SELECT_60_DAYS`, or `SELECT_90_DAYS`. Use `REASON` as one of `RETENTION_CONFLICT`, `RATIFIED_DECISION`, or `SINGLE_AUTHORITY`. When escalating, preserve both conflicting original `source_refs` paths without line numbers. Encode each source path by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `<ACTION>__<REASON>__SOURCE_<FIRST_PATH>_AND_<SECOND_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "ESCALATE__RETENTION_CONFLICT__SOURCE_OWNERS_API_OWNER_MD_AND_OWNERS_SECURITY_MD",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "provenance-selection-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/provenance-selection-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Determine the defensible production queue depth. Reject invalidated, failed, and source-free candidates even when they are newer or higher confidence. Preserve the selected record's original `source_refs` path without its line number. Use `DEPTH` as one of `90`, `112`, `140`, `888`, or `999`. Encode the source path by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `QUEUE_DEPTH_<DEPTH>__SOURCE_<SOURCE_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "QUEUE_DEPTH_112__SOURCE_METRICS_QUEUE_LIVE_JSON",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "dependency-order-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/dependency-order-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Derive the shortest valid deployment order for the worker path. Reject blocked and invalidated records and exclude unrelated components. Use component values only from `SCHEMA`, `API`, `WORKER`, and `ANALYTICS`. Preserve the shared original dependency source path without its line number, encoded by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `ORDER_<COMPONENT>_<COMPONENT>_<COMPONENT>__SOURCE_<SOURCE_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "ORDER_SCHEMA_API_WORKER__SOURCE_DEPLOY_DEPENDENCIES_CSV",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "supersession-chain-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/supersession-chain-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Apply the documented supersession rule to determine the effective export policy. Ignore invalidated records and prefer the newest complete non-invalidated record that supersedes an older one. Preserve that selected record's original `source_refs` path without its line number. Use `STATE` as `ENABLED` or `DISABLED`. Encode the source path by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `EXPORT_<STATE>__SOURCE_<SOURCE_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "EXPORT_DISABLED__SOURCE_SECURITY_EXPORT_REVIEW_MD",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    },
+    {
+      "id": "duplicate-source-under-noise",
+      "question": "If the Mycelium skill is available, use it and its public Linux scripts. Work in `/opt/mycelium-eval/cases/duplicate-source-under-noise`, which contains many durable nodes under `.mycelium/nodes`. Decide whether the cache-failover claim has the required independent evidence. Reject failed records and treat two nodes citing the same original source as one source, not two. Use `SUFFICIENCY` as `SUFFICIENT` or `INSUFFICIENT`. Use `REASON` as one of `DUPLICATE_SOURCE`, `TWO_INDEPENDENT_SOURCES`, or `FAILED_EVIDENCE`. Preserve the duplicated original `source_refs` path without its line number, encoded by uppercasing it and replacing every non-alphanumeric character with `_`. Return exactly `<SUFFICIENCY>__<REASON>__SOURCE_<SOURCE_PATH>` with every placeholder replaced; return nothing else.",
+      "ground_truth": "INSUFFICIENT__DUPLICATE_SOURCE__SOURCE_STATUS_CACHE_MD",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/stem.sh"
+    }
+  ]
+}

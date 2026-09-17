@@ -1,0 +1,264 @@
+{
+  "version": "1",
+  "description": "Frozen lexical retrieval gate for field matches, typed relations, lifecycle filtering, and downstream STEM selection.",
+  "thresholds": {
+    "min_recall_at_5": 0.8,
+    "max_stale_selection_rate": 0.0,
+    "max_context_bytes_per_query": 4096,
+    "min_final_answer_correctness": 0.8
+  },
+  "semantic_gate": {
+    "lexical_paraphrase_recall_below": 0.5,
+    "minimum_hybrid_recall_gain": 0.1,
+    "minimum_hybrid_final_answer_correctness": 1.0
+  },
+  "sources": {
+    "docs/retrieval.md": [
+      "legacy substrate context",
+      "crystal dependency foundation",
+      "rare quartz mode is retired",
+      "first neutral observation",
+      "rare quartz mode is current",
+      "preview quartz mode is experimental"
+    ],
+    "decisions/retention.md": [
+      "audit retention authority policy is escalate",
+      "audit retention is 30 days",
+      "audit retention is 90 days"
+    ]
+  },
+  "nodes": [
+    {
+      "node_id": "node-grandparent",
+      "goal": "quartz knowledge",
+      "facts": ["legacy substrate context"],
+      "topics": "ancestry",
+      "evidence": "docs/retrieval.md:1",
+      "source_refs": "docs/retrieval.md:1"
+    },
+    {
+      "node_id": "node-root",
+      "goal": "quartz knowledge",
+      "facts": ["crystal dependency foundation"],
+      "topics": "crystal dependency",
+      "evidence": "docs/retrieval.md:2",
+      "source_refs": "docs/retrieval.md:2",
+      "depends_on": "node-grandparent"
+    },
+    {
+      "node_id": "node-old",
+      "goal": "quartz knowledge",
+      "facts": ["rare quartz mode is retired"],
+      "topics": "quartz beta",
+      "evidence": "docs/retrieval.md:3",
+      "source_refs": "docs/retrieval.md:3"
+    },
+    {
+      "node_id": "node-new",
+      "goal": "quartz knowledge",
+      "facts": ["first neutral observation", "rare quartz mode is current"],
+      "topics": "quartz beta",
+      "evidence": "feldspar-alias",
+      "source_refs": "docs/retrieval.md:4-5",
+      "depends_on": "node-root",
+      "consumes": "node-old",
+      "supersedes": "node-old"
+    },
+    {
+      "node_id": "node-invalid",
+      "goal": "quartz knowledge",
+      "facts": ["preview quartz mode is experimental"],
+      "topics": "quartz beta",
+      "evidence": "docs/retrieval.md:6",
+      "source_refs": "docs/retrieval.md:6",
+      "supersedes": "node-new",
+      "invalidated": true
+    },
+    {
+      "node_id": "retention-policy",
+      "goal": "audit retention",
+      "facts": ["audit retention authority policy is escalate"],
+      "topics": "audit retention policy",
+      "evidence": "decisions/retention.md:1",
+      "source_refs": "decisions/retention.md:1"
+    },
+    {
+      "node_id": "retention-a",
+      "goal": "audit retention",
+      "facts": ["audit retention is 30 days"],
+      "topics": "audit retention",
+      "evidence": "decisions/retention.md:2",
+      "source_refs": "decisions/retention.md:2"
+    },
+    {
+      "node_id": "retention-b",
+      "goal": "audit retention",
+      "facts": ["audit retention is 90 days"],
+      "topics": "audit retention",
+      "evidence": "decisions/retention.md:3",
+      "source_refs": "decisions/retention.md:3"
+    }
+  ],
+  "queries": [
+    {
+      "id": "exact-node-id",
+      "category": "exact_identifier",
+      "goal": "node-new",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stem_contains": ["[node-new]", "[node-root]"],
+      "stem_excludes": ["[node-old]", "[node-grandparent]"]
+    },
+    {
+      "id": "non-first-fact",
+      "category": "fact",
+      "goal": "rare quartz",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stale_ids": ["node-old"],
+      "stem_contains": ["[node-new]", "[node-root]"],
+      "stem_excludes": ["[node-old]", "[node-grandparent]"]
+    },
+    {
+      "id": "current-fact",
+      "category": "fact",
+      "goal": "quartz current",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stale_ids": ["node-old"],
+      "stem_contains": ["[node-new]", "[node-root]"],
+      "stem_excludes": ["[node-old]"]
+    },
+    {
+      "id": "topic",
+      "category": "topic",
+      "goal": "beta",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stale_ids": ["node-old", "node-invalid"]
+    },
+    {
+      "id": "evidence",
+      "category": "evidence",
+      "goal": "feldspar-alias",
+      "topic": "beta",
+      "expected_ids": ["node-new"]
+    },
+    {
+      "id": "source-ref",
+      "category": "source_ref",
+      "goal": "docs/retrieval.md",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stale_ids": ["node-old", "node-invalid"]
+    },
+    {
+      "id": "depends-on",
+      "category": "relation",
+      "goal": "node-root",
+      "topic": "beta",
+      "expected_ids": ["node-new"]
+    },
+    {
+      "id": "supersedes",
+      "category": "relation",
+      "goal": "node-old",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stale_ids": ["node-old"]
+    },
+    {
+      "id": "superseded-only",
+      "category": "superseded",
+      "goal": "retired",
+      "topic": "beta",
+      "expected_ids": [],
+      "stale_ids": ["node-old"],
+      "cap_exit": 1
+    },
+    {
+      "id": "invalidated-only",
+      "category": "invalidated",
+      "goal": "preview experimental",
+      "topic": "beta",
+      "expected_ids": [],
+      "stale_ids": ["node-invalid"],
+      "cap_exit": 1
+    },
+    {
+      "id": "conflict",
+      "category": "conflict",
+      "goal": "audit retention",
+      "expected_ids": ["retention-policy", "retention-a", "retention-b"],
+      "stem_contains": ["audit retention differs", "retention-a", "retention-b"],
+      "cap_exit": 1
+    },
+    {
+      "id": "conflict-value-a",
+      "category": "fact",
+      "goal": "30 days",
+      "expected_ids": ["retention-a"],
+      "stem_contains": ["audit retention differs", "retention-a", "retention-b"],
+      "cap_exit": 1
+    },
+    {
+      "id": "conflict-value-b",
+      "category": "fact",
+      "goal": "90 days",
+      "expected_ids": ["retention-b"],
+      "stem_contains": ["audit retention differs", "retention-a", "retention-b"],
+      "cap_exit": 1
+    },
+    {
+      "id": "conflict-source-ref",
+      "category": "source_ref",
+      "goal": "decisions/retention.md",
+      "expected_ids": ["retention-policy", "retention-a", "retention-b"],
+      "cap_exit": 1
+    },
+    {
+      "id": "paraphrase-retention",
+      "category": "paraphrase",
+      "goal": "record disposal window",
+      "expected_ids": ["retention-a", "retention-b"]
+    },
+    {
+      "id": "paraphrase-quartz",
+      "category": "paraphrase",
+      "goal": "mineral operating state",
+      "topic": "beta",
+      "expected_ids": ["node-new"]
+    },
+    {
+      "id": "dependency-fact",
+      "category": "dependency",
+      "goal": "crystal dependency",
+      "topic": "crystal",
+      "expected_ids": ["node-root"],
+      "stem_contains": ["[node-root]", "[node-grandparent]"]
+    },
+    {
+      "id": "dependency-link",
+      "category": "dependency",
+      "goal": "grandparent",
+      "topic": "crystal",
+      "expected_ids": ["node-root"]
+    },
+    {
+      "id": "current-mode",
+      "category": "fact",
+      "goal": "current mode",
+      "topic": "beta",
+      "expected_ids": ["node-new"],
+      "stem_contains": ["[node-new]", "[node-root]"],
+      "stem_excludes": ["[node-old]"]
+    },
+    {
+      "id": "paraphrase-active",
+      "category": "paraphrase",
+      "goal": "active configuration",
+      "topic": "beta",
+      "expected_ids": ["node-new"]
+    }
+  ]
+}

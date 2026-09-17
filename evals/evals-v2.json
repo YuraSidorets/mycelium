@@ -1,0 +1,38 @@
+{
+  "version": "2",
+  "skill_name": "mycelium",
+  "defaults": {
+    "timeout_sec": 360,
+    "skill_mount_dir": "/opt/skills"
+  },
+  "cases": [
+    {
+      "id": "role-delegation-discipline",
+      "question": "Use the available Mycelium skill. Run its bundled PowerShell contract checker at `/opt/skills/mycelium/bin/benchmark-contract.ps1` with case `role`. Write the checker's exact single-line output to `/app/mycelium-eval-result.txt`, then return that line and nothing else. Do not inspect benchmark configuration, invent a success token, or create the result file if the checker fails.",
+      "ground_truth": "MYCELIUM_ROLE_7D3A",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/benchmark-contract.ps1"
+    },
+    {
+      "id": "durable-node-provenance",
+      "question": "Use the available Mycelium skill. Run its bundled PowerShell contract checker at `/opt/skills/mycelium/bin/benchmark-contract.ps1` with case `durable`. Write the checker's exact single-line output to `/app/mycelium-eval-result.txt`, then return that line and nothing else. Do not inspect benchmark configuration, invent a success token, or create the result file if the checker fails.",
+      "ground_truth": "MYCELIUM_DURABLE_91C4",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/benchmark-contract.ps1"
+    },
+    {
+      "id": "conflict-rejection",
+      "question": "Use the available Mycelium skill. Run its bundled PowerShell contract checker at `/opt/skills/mycelium/bin/benchmark-contract.ps1` with case `conflict`. Write the checker's exact single-line output to `/app/mycelium-eval-result.txt`, then return that line and nothing else. Do not inspect benchmark configuration, invent a success token, or create the result file if the checker fails.",
+      "ground_truth": "MYCELIUM_CONFLICT_2F8B",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/benchmark-contract.ps1"
+    },
+    {
+      "id": "selection-boundaries",
+      "question": "Use the available Mycelium skill. Run its bundled PowerShell contract checker at `/opt/skills/mycelium/bin/benchmark-contract.ps1` with case `selection`. Write the checker's exact single-line output to `/app/mycelium-eval-result.txt`, then return that line and nothing else. Do not inspect benchmark configuration, invent a success token, or create the result file if the checker fails.",
+      "ground_truth": "MYCELIUM_SELECTION_6E05",
+      "expected_skill": "mycelium",
+      "expected_script": "bin/benchmark-contract.ps1"
+    }
+  ]
+}
