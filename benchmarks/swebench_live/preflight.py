@@ -615,6 +615,10 @@ def probe(
     codex_command = [str(binary_path)] if codex_command is None else [str(value) for value in codex_command]
     if not codex_command or Path(codex_command[0]).resolve() != binary_path:
         raise PreflightError("Codex command does not launch the verified native executable")
+    # Record the launcher as the verified resolved path so validate_receipt's
+    # exact comparison holds when the caller passed an unresolved spelling
+    # (8.3 short names in %TEMP% on hosted Windows runners, relative paths).
+    codex_command[0] = str(binary_path)
     version = _run([*codex_command, "--version"], timeout=timeout)
     if version.stdout.strip() != f"codex-cli {pilot.CODEX_VERSION}":
         raise PreflightError("Codex executable version does not match the frozen runtime")
