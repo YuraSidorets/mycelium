@@ -581,7 +581,9 @@ class SpawnTraceRecordingTests(unittest.TestCase):
 
     def assert_rejected(self, result):
         self.assertNotEqual(0, result.returncode, result.stdout)
-        self.assertIn(SPAWN_ERROR, result.stdout + result.stderr)
+        # pwsh on Linux colors and wraps error text at the console width.
+        output = re.sub(r"\x1b\[[0-9;]*m", "", result.stdout + result.stderr)
+        self.assertIn(" ".join(SPAWN_ERROR.split()), " ".join(output.split()))
 
     def test_python_rejects_a_spawn_trace_without_a_producing_agent(self):
         self.assert_rejected(self.run_python_node("--trace", SPAWN_TRACE))

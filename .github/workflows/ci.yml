@@ -41,6 +41,8 @@ jobs:
       - name: Python unit tests
         run: python -m unittest discover -s tests -p "test_*.py"
       - name: Atlas tests
+        # pwsh, the default shell on Windows runners, does not expand globs.
+        shell: bash
         run: node --test tests/*.mjs
       - name: PowerShell smoke tests
         shell: pwsh

@@ -34,20 +34,21 @@ apex_node_id="${run_id}-apex"
 stem_node_id="${run_id}-stem"
 cap_node_id="${run_id}-cap"
 
-"$lineage_script" begin --goal "$goal" --run-id "$run_id" --topology-preset apex-stem-cap >/dev/null
+# Invoke siblings through sh so a checkout without executable bits still works.
+sh "$lineage_script" begin --goal "$goal" --run-id "$run_id" --topology-preset apex-stem-cap >/dev/null
 
-"$node_script" "$goal" "$apex_node_id" apex complete "$apex_facts" none none \
+sh "$node_script" "$goal" "$apex_node_id" apex complete "$apex_facts" none none \
     --topics "$topics" --evidence "$apex_evidence" --confidence "$confidence" \
     --consumes none --blocks none --run-id "$run_id" >/dev/null
 
-"$node_script" "$goal" "$stem_node_id" stem complete "$stem_facts" none none \
+sh "$node_script" "$goal" "$stem_node_id" stem complete "$stem_facts" none none \
     --topics "$topics" --evidence "$apex_node_id" --confidence "$confidence" \
     --consumes "$apex_node_id" --blocks none --run-id "$run_id" \
     --process-input "$apex_node_id" >/dev/null
 
-"$node_script" "$goal" "$cap_node_id" cap complete "$cap_facts" none "host: run external verification" \
+sh "$node_script" "$goal" "$cap_node_id" cap complete "$cap_facts" none "host: run external verification" \
     --topics "$topics" --evidence "$stem_node_id" --confidence "$confidence" \
     --consumes "$stem_node_id" --blocks none --run-id "$run_id" \
     --process-input "$stem_node_id" >/dev/null
 
-"$lineage_script" seal --run-id "$run_id"
+sh "$lineage_script" seal --run-id "$run_id"

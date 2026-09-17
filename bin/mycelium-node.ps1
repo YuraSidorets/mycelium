@@ -131,7 +131,8 @@ if (-not [string]::IsNullOrWhiteSpace($Trace) -and
         if ($Trace -cnotmatch [regex]::Escape($segment)) { $spawnIncomplete = $true }
     }
     if ($spawnIncomplete) {
-        throw "Trace names a spawn tool; ProducingAgent and Action/Observation/Result are required."
+        [Console]::Error.WriteLine("Trace names a spawn tool; ProducingAgent and Action/Observation/Result are required.")
+        exit 2
     }
 }
 
