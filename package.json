@@ -4,6 +4,7 @@
   "private": true,
   "description": "Local read-only explorer for Mycelium artifact graphs",
   "license": "Apache-2.0",
+  "author": "Yurii Sydorets",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YuraSidorets/mycelium.git"
@@ -17,6 +18,7 @@
     "mycelium-atlas": "bin/mycelium-atlas.mjs"
   },
   "files": [
+    "NOTICE",
     "bin/mycelium-atlas.mjs",
     "bin/mycelium_graph.py",
     "bin/mycelium_lineage.py",

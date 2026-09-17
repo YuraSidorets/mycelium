@@ -1,7 +1,12 @@
 .claude-plugin/plugin.json
 .gitattributes
-.gitignore
+.github/workflows/ci.yml
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+NOTICE
 README.md
+SECURITY.md
 SKILL.md
 agents/apex.md
 agents/cap.md
@@ -96,6 +101,7 @@ evals/verify-cap.py
 evals/workflow-oracle.ps1
 hyphae.md
 package.json
+release/public-files.txt
 septum.md
 stem.md
 tests/grader-isolation.sh

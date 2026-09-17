@@ -16,6 +16,7 @@ MANIFEST_PATH = REPOSITORY / "package.json"
 NODE = shutil.which("node")
 NPM = shutil.which("npm")
 EXPECTED_PACKAGE_FILES = {
+    "NOTICE",
     "bin/mycelium-atlas.mjs",
     "bin/mycelium_graph.py",
     "bin/mycelium_lineage.py",

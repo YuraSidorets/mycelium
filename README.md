@@ -308,7 +308,9 @@ feedback and three unchanged runs before claiming improvement.
 
 ## License
 
-Apache-2.0. See `LICENSE`. Third-party tools invoked by the benchmark adapters
+Copyright 2026 Yurii Sydorets. Licensed under the Apache License, Version 2.0;
+see `LICENSE` for the terms and `NOTICE` for the attribution that must
+accompany redistributions. Third-party tools invoked by the benchmark adapters
 keep their own licenses and are not redistributed here.
 
 ## Security
